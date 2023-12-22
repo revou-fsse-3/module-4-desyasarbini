@@ -1,5 +1,5 @@
 import {Input, Button, Typography, Card, Table} from '../../components';
-import {useFormik} from 'formik';
+import {Form, useFormik} from 'formik';
 import { useState } from 'react';
 import * as yup from 'yup';
 
@@ -81,56 +81,79 @@ const FormContainer = () => {
 
     return (
         <Card border={false} className={'flex flex-col gap-3'}>
-            <Card border>
-                {step === 1 && (
-                    <form onSubmit={formMik.handleSubmit}>
-                        <div className='mb-5'>
-                            <Typography>{'Full Name'}</Typography>
-                            <Input 
-                                className="border-solid border-2 border-sky-500 rounded-md w-full" 
-                                name={'fullName'} 
-                                value={formMik.values.fullName}
-                                onChange={formMik.handleChange('fullName')}
-                            />
+            {step === 1 && (
+                <div>
+                    <Card border>
+                        <form onSubmit={formMik.handleSubmit}>
+                            <div className='mb-5'>
+                                <Typography>{'Full Name'}</Typography>
+                                <Input 
+                                    className="border-solid border-2 border-sky-500 rounded-md w-full" 
+                                    name={'fullName'} 
+                                    value={formMik.values.fullName}
+                                    onChange={formMik.handleChange('fullName')}
+                                />
+                                {
+                                    formMik.errors.fullName && (
+                                        <Typography>{formMik.errors.fullName}</Typography>
+                                    )
+                                }
+                            </div>
+                            <div className='mb-5'>
+                                <Typography>{'E-mail'}</Typography>
+                                <Input 
+                                    className="border-solid border-2 border-sky-500 rounded-md w-full" 
+                                    name={'email'} 
+                                    value={formMik.values.email}
+                                    onChange={formMik.handleChange('email')}
+                                />
+                                {
+                                    formMik.errors.email && (
+                                        <Typography>{formMik.errors.email}</Typography>
+                                    )
+                                }
+                            </div>
+                            <div className='mb-5'>
+                                <Typography>{'Date Of Birth'}</Typography>
+                                <Input 
+                                    className="border-solid border-2 border-sky-500 rounded-md w-full" 
+                                    name={'tanggalLahir'} 
+                                    value={formMik.values.tanggalLahir}
+                                    onChange={formMik.handleChange('tanggalLahir')}
+                                />
+                                {
+                                    formMik.errors.tanggalLahir && (
+                                        <Typography>{formMik.errors.tanggalLahir}</Typography>
+                                    )
+                                }
+                            </div>
+                            <Button label={'Submit'} type={'submit'} className='bg-sky-500'/>
+                        </form>
+                    </Card>
+                    <Card border>
+                        <Table headers={[
                             {
-                                formMik.errors.fullName && (
-                                    <Typography>{formMik.errors.fullName}</Typography>
-                                )
-                            }
-                        </div>
-                        <div className='mb-5'>
-                            <Typography>{'E-mail'}</Typography>
-                            <Input 
-                                className="border-solid border-2 border-sky-500 rounded-md w-full" 
-                                name={'email'} 
-                                value={formMik.values.email}
-                                onChange={formMik.handleChange('email')}
-                            />
+                                label: 'Full Name',
+                                key: 'fullName'
+                            },
                             {
-                                formMik.errors.email && (
-                                    <Typography>{formMik.errors.email}</Typography>
-                                )
-                            }
-                        </div>
-                        <div className='mb-5'>
-                            <Typography>{'Date Of Birth'}</Typography>
-                            <Input 
-                                className="border-solid border-2 border-sky-500 rounded-md w-full" 
-                                name={'tanggalLahir'} 
-                                value={formMik.values.tanggalLahir}
-                                onChange={formMik.handleChange('tanggalLahir')}
-                            />
+                                label: 'E-mail',
+                                key: 'email'
+                            },
                             {
-                                formMik.errors.tanggalLahir && (
-                                    <Typography>{formMik.errors.tanggalLahir}</Typography>
-                                )
-                            }
-                        </div>
-                        <Button label={'Submit'} type={'submit'} className='bg-sky-500'/>
-                        <Button label={'Next'} onClick={handleNext} type={'button'} className='bg-sky-500'/>
-                    </form>
-                )}
-                {step === 2 && (
+                                label: 'Date Of Birth',
+                                key: 'tanggalLahir'
+                            },
+                        ]} data={users}
+                        onEdit={onEdit}
+                        onDelete={onDelete}
+                        />
+                    </Card>
+                </div>
+            )}
+            {step === 2 && (
+                <div>
+                    <Card border>
                     <form onSubmit={formMik.handleSubmit}>
                         <div className='mb-5'>
                             <Typography>{'Address'}</Typography>
@@ -188,12 +211,37 @@ const FormContainer = () => {
                                 )
                             }
                         </div>
-                        <Button label={'Previous'} onClick={handlePrevious} type={'button'} className='bg-sky-500'/>
                         <Button label={'Submit'} type={'submit'} className='bg-sky-500'/>
-                        <Button label={'Next'} onClick={handleNext} type={'button'} className='bg-sky-500'/>
                     </form>
-                )}
-                {step === 3 && (
+                    </Card>
+                    <Card border>
+                        <Table headers={[
+                            {
+                                label: 'Address',
+                                key: 'address'
+                            },
+                            {
+                                label: 'City',
+                                key: 'city'
+                            },
+                            {
+                                label: 'State',
+                                key: 'state'
+                            },
+                            {
+                                label: 'Zip Code',
+                                key: 'zipCode'
+                            }
+                        ]} data={users}
+                        onEdit={onEdit}
+                        onDelete={onDelete}
+                        />
+                    </Card>
+                </div>                      
+            )}
+            {step === 3 &&(
+                <div>
+                    <Card border>
                     <form onSubmit={formMik.handleSubmit}>
                         <div className='mb-5'>
                             <Typography>{'Username'}</Typography>
@@ -223,32 +271,31 @@ const FormContainer = () => {
                                 )
                             }
                         </div>
-                        <Button label={'Previous'} onClick={handlePrevious} type={'button'} className='bg-sky-500'/>
                         <Button label={'Submit'} type={'submit'} className='bg-sky-500'/>
                     </form>
-                )}
-            </Card>
-            <Card border>
-                <Table headers={[
-                    {
-                        label: 'Full Name',
-                        key: 'fullName'
-                    },
-                    {
-                        label: 'E-mail',
-                        key: 'email'
-                    },
-                    {
-                        label: 'Date Of Birth',
-                        key: 'tanggalLahir'
-                    },
-                ]} data={users}
-                onEdit={onEdit}
-                onDelete={onDelete}
-                />
-            </Card>
-        </Card>
-        
+                    </Card>
+                    <Card border>
+                        <Table headers={[
+                            {
+                                label: 'Username',
+                                key: 'userName'
+                            },
+                            {
+                                label: 'Password',
+                                key: 'password'
+                            },
+                        ]} data={users}
+                        onEdit={onEdit}
+                        onDelete={onDelete}
+                        />
+                    </Card>
+                </div>
+            )}
+            <div className='flex justify-end'>
+                <Button label={'Previous'} onClick={handlePrevious} type={'button'} className={'bg-green-500'}/>
+                <Button label={'Next'} onClick={handleNext} type={'button'} className={'bg-green-500'}/> 
+            </div>
+        </Card>   
     )
 }
 export default FormContainer
