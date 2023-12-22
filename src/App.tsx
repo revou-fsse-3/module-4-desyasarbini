@@ -1,7 +1,10 @@
+import './App.css';
+import { FormContainer } from './containers';
+
 function App() {
   return (
-    <div className="App">
-      
+    <div className="app">
+      <FormContainer/>
     </div>
   );
 }
