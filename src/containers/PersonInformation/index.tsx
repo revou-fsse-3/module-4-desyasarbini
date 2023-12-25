@@ -34,7 +34,7 @@ const PersonInformation: React.FC<PersonInformationProps> = ({onNext}) => {
         <div>
             <Card border>
                 <form onSubmit={formMik.handleSubmit}>
-                    <Typography className='mb-5 text-2xl font-semibold text-center text-sky-900'>
+                    <Typography className='m-5 text-xl font-semibold text-center text-sky-900'>
                         {'Personal Information'}
                     </Typography>
                     <div className='mb-5'>

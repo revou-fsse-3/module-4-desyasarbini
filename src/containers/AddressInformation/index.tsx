@@ -39,11 +39,11 @@ const AddressInformation: React.FC<AddressInformationProps> = ({onNext, onPrevio
 
             <Card border>
                 <form onSubmit={formMik.handleSubmit}>
-                    <Typography className='mb-5 text-2xl font-semibold text-center text-sky-900'>
+                    <Typography className='m-5 text-xl font-semibold text-center text-sky-900'>
                         {'Address Information'}
                     </Typography>
                     <div className='mb-5'>
-                        <Typography>{'Address'}</Typography>
+                        <Typography className='font-medium text-sky-800'>{'Address'}</Typography>
                         <Input 
                             className="border-solid border-2 border-sky-500 rounded-md w-full" 
                             name={'address'} 
@@ -57,7 +57,7 @@ const AddressInformation: React.FC<AddressInformationProps> = ({onNext, onPrevio
                         }
                     </div>
                     <div className='mb-5'>
-                        <Typography>{'City'}</Typography>
+                        <Typography className='font-medium text-sky-800'>{'City'}</Typography>
                         <Input 
                             className="border-solid border-2 border-sky-500 rounded-md w-full" 
                             name={'city'} 
@@ -71,7 +71,7 @@ const AddressInformation: React.FC<AddressInformationProps> = ({onNext, onPrevio
                         }
                     </div>
                     <div className='mb-5'>
-                        <Typography>{'State'}</Typography>
+                        <Typography className='font-medium text-sky-800'>{'State'}</Typography>
                         <Input 
                             className="border-solid border-2 border-sky-500 rounded-md w-full" 
                             name={'state'} 
@@ -85,7 +85,7 @@ const AddressInformation: React.FC<AddressInformationProps> = ({onNext, onPrevio
                         }
                     </div>
                     <div className='mb-5'>
-                        <Typography>{'ZIP Code'}</Typography>
+                        <Typography className='font-medium text-sky-800'>{'ZIP Code'}</Typography>
                         <Input 
                             className="border-solid border-2 border-sky-500 rounded-md w-full" 
                             name={'zipCode'} 

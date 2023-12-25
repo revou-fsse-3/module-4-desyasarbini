@@ -37,11 +37,11 @@ const AccountInformation: React.FC<AddressInformationProps> = ({onNext, onPrevio
         
             <Card border>
                 <form onSubmit={formMik.handleSubmit}>
-                    <Typography className='mb-5 text-2xl font-semibold text-center text-sky-900'>
+                    <Typography className='m-5 text-xl font-semibold text-center text-sky-900'>
                         {'Account Information'}
                     </Typography>
                     <div className='mb-5'>
-                        <Typography>{'UserName'}</Typography>
+                        <Typography className='font-medium text-sky-800'>{'UserName'}</Typography>
                         <Input 
                             className="border-solid border-2 border-sky-500 rounded-md w-full" 
                             name={'userName'} 
@@ -55,7 +55,7 @@ const AccountInformation: React.FC<AddressInformationProps> = ({onNext, onPrevio
                         }
                     </div>
                     <div className='mb-5'>
-                        <Typography>{'password'}</Typography>
+                        <Typography className='font-medium text-sky-800'>{'password'}</Typography>
                         <Input 
                             className="border-solid border-2 border-sky-500 rounded-md w-full" 
                             name={'password'} 

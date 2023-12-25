@@ -6,7 +6,8 @@ interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
 
 const PreviousButton = ({label, disabled, ...props}: Props) => {
     return (
-        <button {...props} className="rounded-md bg-orange-400 hover:bg-orange-600 px-3 py-2 text-sm font-semibold text-sky-900 shadow-sm"> 
+        <button {...props} 
+        className="rounded-md bg-orange-300 hover:bg-orange-400 px-3 py-2 text-sm font-semibold text-sky-950 shadow-sm"> 
         {label}</button>
     )
 }
