@@ -1,25 +1,42 @@
+import { useEffect, useState } from 'react';
 import {Input, Text, Card} from '../../components';
 import { SubmitButton } from '../../components/Button';
 import {useFormik} from 'formik';
 import * as yup from 'yup';
 
+interface RegisterData {
+    name: string
+    email: string
+    password: string
+}
+
+interface Response {
+    register: RegisterData[]
+}
+
 const RegisterContainer = () => {
+
+    const [register, setRegister] = useState<RegisterData[]>([])
+
+    const fetchDataRegister = async () => {
+        const response = await fetch('https://mock-api.arikmpt.com/api/user/register')
+        const data: Response = await response.json()
+        setRegister?.(data.register)
+    }
     
     const formMik = useFormik ({
         initialValues: {
-            fullName: '',
+            name: '',
             email: '',
             password: '',
         },
 
         // nilai yg ada dalam form terhapus ketika telah disubmit
-        onSubmit: (values) => {
-            console.log(values)
-        },
+        onSubmit: (data: RegisterData) => submitRegistrasi (data),
 
         // validasi data
         validationSchema: yup.object({
-            fullName: yup.string().min(2,'Too Short!').required(),
+            name: yup.string().min(2,'Too Short!').required(),
             email: yup.string().email('invalid email').required(),
             password: yup.string()
             .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
@@ -28,22 +45,45 @@ const RegisterContainer = () => {
         })
     })
 
+    const submitRegistrasi = async (form: RegisterData) => {
+        const response = await fetch ('https://mock-api.arikmpt.com/api/user/register', {
+            headers: {
+                'Authorization' : localStorage.getItem('token') ?? ''
+            },
+            method: 'POST',
+            body: JSON.stringify({
+                name: form.email,
+                email: form.email,
+                password: form.password
+            })
+        })
+        const data: RegisterData = await response.json();
+        setRegister ([...register, data])
+    }
+
+    useEffect (
+        () => {
+            fetchDataRegister()
+        },
+        []
+    )
+
     return (
         <div className="app">
             <Card border>
                 <form onSubmit={formMik.handleSubmit}>
                     <Text className='m-5 text-xl font-bold text-center text-sky-900'>{'Create your Account'}</Text>
                     <div className='mb-5'>
-                        <Text className='text-l font-semibold text-sky-900'>{'Full Name'}</Text>
+                        <Text className='text-l font-semibold text-sky-900'>{'Name'}</Text>
                         <Input 
                             className="border-solid border-2 border-sky-500 rounded-md w-full"
-                            name={'fullName'} 
-                            value={formMik.values.fullName}
-                            onChange={formMik.handleChange('fullName')}
+                            name={'name'} 
+                            value={formMik.values.name}
+                            onChange={formMik.handleChange('name')}
                         />
                         {
-                            formMik.errors.fullName && (
-                                <Text>{formMik.errors.fullName}</Text>
+                            formMik.errors.name && (
+                                <Text>{formMik.errors.name}</Text>
                             )
                         }
                     </div>

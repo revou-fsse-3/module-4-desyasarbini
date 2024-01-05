@@ -1,7 +1,7 @@
 
 import { useEffect, useState } from 'react';
 import {Input, Text, Card} from '../../components';
-import { Tombol, SubmitButton } from '../../components/Button';
+import { SubmitButton } from '../../components/Button';
 import {useFormik} from 'formik';
 import * as yup from 'yup';
 
@@ -11,25 +11,18 @@ interface LoginData {
 }
 
 interface Response {
-    databases: LoginData[]
+    dataLogin: LoginData[]
 }
 
 const LoginContainer = () => {
 
-    const [databases, setDatabases] = useState<LoginData[]>([])
+    const [dataLogin, setDatalogin] = useState<LoginData[]>([])
 
-    const fetchDatalogin = async () => {
+    const fetchDataLogin = async () => {
         const response = await fetch('https://mock-api.arikmpt.com/api/user/login')
         const data: Response = await response.json()
-        setDatabases?.(data.databases)
+        setDatalogin?.(data.dataLogin)
     }
-
-    useEffect (
-        () => {
-            fetchDatalogin()
-        },
-        []
-    )
 
     const formMik = useFormik ({
         initialValues: {
@@ -38,9 +31,7 @@ const LoginContainer = () => {
         },
 
         // nilai yg ada dalam form terhapus ketika telah disubmit
-        onSubmit: (values) => {
-            console.log(values)
-        },
+        onSubmit: (data: LoginData) => submitLogin (data),
 
         // validasi data
         validationSchema: yup.object({
@@ -52,9 +43,27 @@ const LoginContainer = () => {
         })
     })
 
-    const handleInsertToken = () => {
-        localStorage.setItem('token', 'sudahadatoken')
+    const submitLogin = async (form: LoginData) => {
+        const response = await fetch ('https://mock-api.arikmpt.com/api/user/login', {
+            headers: {
+                'Authorization' : localStorage.getItem("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjhjNzFlNjY5LTM4ZGYtNGRkNy04NDYwLTc4ODc2ZmM0NTNjOSIsImlhdCI6MTcwNDQ3NTY5MywiZXhwIjoxNzA0NDk3MjkzfQ.bBQSrTlvyEgY3dIjYxCzbxOFFUNKeHYlyu2WvjZmKm4") ?? ''
+            },
+            method: 'POST',
+            body: JSON.stringify({
+                email: form.email,
+                password: form.password
+            })
+        })
+        const data: LoginData = await response.json();
+        setDatalogin ([...dataLogin, data])
     }
+
+    useEffect (
+        () => {
+            fetchDataLogin()
+        },
+        []
+    )
 
     return (
         <div className="app">
@@ -90,7 +99,7 @@ const LoginContainer = () => {
                             )
                         }
                     </div>
-                    <SubmitButton label={'Login'} onClick={handleInsertToken} type={'submit'} disabled={!formMik.isValid}/>
+                    <SubmitButton label={'Login'} type={'submit'} disabled={!formMik.isValid}/>
                 </form>
             </Card>
         </div>
