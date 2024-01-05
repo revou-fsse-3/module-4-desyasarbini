@@ -31,6 +31,22 @@ const ProductContainer = () => {
         onSubmit: (data: ProductData) => submitProduct(data)
     })
 
+    // untuk menambahkan product
+    const submitProduct = async (form: ProductData) => {
+        const response = await fetch('https://dummyjson.com/products/add',{
+            headers: {
+                'Authorization' : localStorage.getItem('token') ?? ''
+            },
+            method: 'POST',
+            body: JSON.stringify({
+                title: form.title,
+                price: form.price
+            })
+        })
+        const data: ProductData = await response.json();
+        setProducts([...products, data])
+    }
+
     useEffect (
         () => {
             fetchProduct()
