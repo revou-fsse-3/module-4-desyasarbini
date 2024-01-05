@@ -3,11 +3,13 @@ import {
   LoginContainer, 
   ProfileContainer, 
   DaftarContainer,
-  ProtectContainer } from './containers'
+  ProtectContainer,
+  ProductContainer } from './containers'
 import './App.css';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import PublicLayout from './layout/PublicLayout';
+import PublicLayout from './layout/PublicLayout'
 import ProtectLayout from './layout/ProtectLayout'
+import ContextProvider from './providers/ContextProvider';
 
 
 const App = () => {
@@ -25,8 +27,12 @@ const App = () => {
           element: <LoginContainer/>
         },
         {
-          path: '/profile/:id',
+          path: '/profile',
           element: <ProfileContainer/>
+        },
+        {
+          path: '/product',
+          element: <ProductContainer/>
         },
         {
           path: '/daftar',
@@ -49,7 +55,11 @@ const App = () => {
     }
   ])
   return (
-    <RouterProvider router={router}/>
+    <div>
+      <ContextProvider>
+        <RouterProvider router={router}/>
+      </ContextProvider>
+    </div>
   );
 }
 

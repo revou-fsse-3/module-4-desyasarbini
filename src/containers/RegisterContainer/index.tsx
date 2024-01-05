@@ -32,13 +32,14 @@ const RegisterContainer = () => {
         <div className="app">
             <Card border>
                 <form onSubmit={formMik.handleSubmit}>
-                    <Text className='m-5 text-xl font-semibold text-center text-sky-900'>{'Signup'}</Text>
-                    <div>
-                        <Text>{'Full Name'}</Text>
+                    <Text className='m-5 text-xl font-bold text-center text-sky-900'>{'Create your Account'}</Text>
+                    <div className='mb-5'>
+                        <Text className='text-l font-semibold text-sky-900'>{'Full Name'}</Text>
                         <Input 
-                            name={'Full Name'} 
+                            className="border-solid border-2 border-sky-500 rounded-md w-full"
+                            name={'fullName'} 
                             value={formMik.values.fullName}
-                            onChange={formMik.handleChange('Full Name')}
+                            onChange={formMik.handleChange('fullName')}
                         />
                         {
                             formMik.errors.fullName && (
@@ -46,9 +47,10 @@ const RegisterContainer = () => {
                             )
                         }
                     </div>
-                    <div>
-                        <Text>{'E-mail'}</Text>
+                    <div className='mb-5'>
+                        <Text className='text-l font-semibold text-sky-900'>{'E-mail'}</Text>
                         <Input 
+                            className="border-solid border-2 border-sky-500 rounded-md w-full"
                             name={'email'} 
                             value={formMik.values.email}
                             onChange={formMik.handleChange('email')}
@@ -59,9 +61,10 @@ const RegisterContainer = () => {
                             )
                         }
                     </div>
-                    <div>
-                        <Text>{'Password'}</Text>
+                    <div className='mb-5'>
+                        <Text className='text-l font-semibold text-sky-900'>{'Password'}</Text>
                         <Input 
+                            className="border-solid border-2 border-sky-500 rounded-md w-full"
                             name={'password'} 
                             type="password"
                             value={formMik.values.password}
@@ -73,7 +76,7 @@ const RegisterContainer = () => {
                             )
                         }
                     </div>
-                    <SubmitButton label={'Signup'} type={'submit'} disabled={!formMik.isValid}/>
+                    <SubmitButton label={'Register'} type={'submit'} disabled={!formMik.isValid}/>
                 </form>
             </Card>
         </div>

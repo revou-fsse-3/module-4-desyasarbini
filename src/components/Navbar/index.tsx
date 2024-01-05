@@ -26,10 +26,11 @@ const Navbar = () => {
                         </div>
                         <div className="hidden sm:ml-6 sm:block">
                         <div className="flex space-x-4">
-                            <button onClick={() => navigate('/')} className="bg-gray-900 text-white rounded-md px-3 py-2 text-sm font-medium" aria-current="page">Sign Up</button>
+                            <button onClick={() => navigate('/')} className="bg-gray-900 text-white rounded-md px-3 py-2 text-sm font-medium" aria-current="page">Register</button>
                             <button onClick={() => navigate('/login')} className="bg-gray-900 text-white rounded-md px-3 py-2 text-sm font-medium" aria-current="page">Login</button>
-                            <button onClick={() => navigate('/profile/:id')} className="bg-gray-900 text-white rounded-md px-3 py-2 text-sm font-medium" aria-current="page">Profile</button>
-                            <button onClick={() => navigate('/daftar')} className="bg-gray-900 text-white rounded-md px-3 py-2 text-sm font-medium" aria-current="page">Prj.1 Daftar</button>
+                            <button onClick={() => navigate('/profile')} className="bg-gray-900 text-white rounded-md px-3 py-2 text-sm font-medium" aria-current="page">Profile</button>
+                            <button onClick={() => navigate('/product')} className="bg-gray-900 text-white rounded-md px-3 py-2 text-sm font-medium" aria-current="page">Product</button>
+                            <button onClick={() => navigate('/daftar')} className="bg-gray-900 text-white rounded-md px-3 py-2 text-sm font-medium" aria-current="page">Tugas-1</button>
                             <button onClick={() => navigate('/protect')} className="bg-gray-900 text-white rounded-md px-3 py-2 text-sm font-medium" aria-current="page">Protect</button>
                         </div>
                         </div>
