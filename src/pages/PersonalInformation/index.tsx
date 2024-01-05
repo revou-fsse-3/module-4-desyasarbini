@@ -1,13 +1,13 @@
-import {Input, Typography, Card, Date} from '../../components';
+import {Input, Text, Card, Date} from '../../components';
 import { SubmitButton} from '../../components/Button';
 import {useFormik} from 'formik';
 import * as yup from 'yup';
 
-interface PersonInformationProps{
+interface PersonalInformationProps{
     onNext: () => void
 }
 
-const PersonInformation: React.FC<PersonInformationProps> = ({onNext}) => {
+const PersonalInformation: React.FC<PersonalInformationProps> = ({onNext}) => {
 
     const formMik = useFormik ({
         initialValues: {
@@ -34,11 +34,11 @@ const PersonInformation: React.FC<PersonInformationProps> = ({onNext}) => {
         <div>
             <Card border>
                 <form onSubmit={formMik.handleSubmit}>
-                    <Typography className='m-5 text-xl font-semibold text-center text-sky-900'>
+                    <Text className='m-5 text-xl font-semibold text-center text-sky-900'>
                         {'Personal Information'}
-                    </Typography>
+                    </Text>
                     <div className='mb-5'>
-                        <Typography className='font-medium text-sky-800'>{'Full Name'}</Typography>
+                        <Text className='font-medium text-sky-800'>{'Full Name'}</Text>
                         <Input 
                             className="border-solid border-2 border-sky-500 rounded-md w-full" 
                             name={'fullName'} 
@@ -47,12 +47,12 @@ const PersonInformation: React.FC<PersonInformationProps> = ({onNext}) => {
                         />
                         {
                             formMik.errors.fullName && (
-                                <Typography>{formMik.errors.fullName}</Typography>
+                                <Text>{formMik.errors.fullName}</Text>
                             )
                         }
                     </div>
                     <div className='mb-5'>
-                        <Typography className='font-medium text-sky-800'>{'E-mail'}</Typography>
+                        <Text className='font-medium text-sky-800'>{'E-mail'}</Text>
                         <Input 
                             className="border-solid border-2 border-sky-500 rounded-md w-full" 
                             name={'email'} 
@@ -61,12 +61,12 @@ const PersonInformation: React.FC<PersonInformationProps> = ({onNext}) => {
                         />
                         {
                             formMik.errors.email && (
-                                <Typography>{formMik.errors.email}</Typography>
+                                <Text>{formMik.errors.email}</Text>
                             )
                         }
                     </div>
                     <div className='mb-5'>
-                        <Typography className='font-medium text-sky-800'>{'Birth Date'}</Typography>
+                        <Text className='font-medium text-sky-800'>{'Birth Date'}</Text>
                         <Date
                             className="border-solid border-2 border-sky-500 rounded-md w-full" 
                             name={'birthDate'} 
@@ -75,7 +75,7 @@ const PersonInformation: React.FC<PersonInformationProps> = ({onNext}) => {
                         />
                         {
                             formMik.errors.birthDate && (
-                                <Typography>{formMik.errors.birthDate}</Typography>
+                                <Text>{formMik.errors.birthDate}</Text>
                             )
                         }
                     </div>
@@ -85,4 +85,4 @@ const PersonInformation: React.FC<PersonInformationProps> = ({onNext}) => {
         </div>  
     )
 }
-export default PersonInformation
+export default PersonalInformation

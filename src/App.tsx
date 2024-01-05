@@ -1,48 +1,56 @@
-import React, { useState } from 'react';
+import { 
+  RegisterContainer, 
+  LoginContainer, 
+  ProfileContainer, 
+  DaftarContainer,
+  ProtectContainer } from './containers'
 import './App.css';
-import { AccountInformation, AddressInformation, PersonInformation } from './containers';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import PublicLayout from './layout/PublicLayout';
+import ProtectLayout from './layout/ProtectLayout'
 
-const App: React.FC = () => {
-  const [step, setStep] = useState<number>(1);
 
-    // fungsi tombol next
-    const handleNext = () => {
-      if (step === 3) {
-        handleFormSubmit();
-      } else setStep ((prevState) => prevState + 1);
-    };
+const App = () => {
 
-    // fungsi tombol previous
-    const handlePrevious = () => { 
-      if (step === 1) {
-          return
-      }
-      setStep((prevState) => prevState - 1)
-  }
-
-    const handleFormSubmit = () => {
-      console.log();
-    };
-    
-    return (
-      <div className="app">
-        {step === 1 && (
-          <PersonInformation 
-          onNext={handleNext}/>
-        )} 
-        {step === 2 && (
-          <AddressInformation 
-          onNext={handleNext} 
-          onPrevious={handlePrevious}/>
-        )}
-        {step === 3 && (
-          <AccountInformation 
-          onNext={handleNext} 
-          onPrevious={handlePrevious}/>
-        )}
-        
-      </div>
-    );
+  const router = createBrowserRouter([
+    {
+      element: <PublicLayout/>,
+      children: [
+        {
+          path: '/',
+          element: <RegisterContainer/>
+        },
+        {
+          path: '/login',
+          element: <LoginContainer/>
+        },
+        {
+          path: '/profile/:id',
+          element: <ProfileContainer/>
+        },
+        {
+          path: '/daftar',
+          element: <DaftarContainer/>
+        },
+      ]
+    },
+    {
+      path: '*',
+      element: <h1>404</h1>
+    },
+    {
+      element: <ProtectLayout/>,
+      children: [
+        {
+          path: '/protect',
+          element: <ProtectContainer/>
+        }
+      ]
+    }
+  ])
+  return (
+    <RouterProvider router={router}/>
+  );
 }
 
 export default App;

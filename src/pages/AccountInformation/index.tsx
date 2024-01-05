@@ -32,9 +32,7 @@ const AccountInformation: React.FC<AddressInformationProps> = ({onNext, onPrevio
     })
 
     return (
-        
         <div>
-        
             <Card border>
                 <form onSubmit={formMik.handleSubmit}>
                     <Text className='m-5 text-xl font-semibold text-center text-sky-900'>
@@ -72,9 +70,7 @@ const AccountInformation: React.FC<AddressInformationProps> = ({onNext, onPrevio
                     <SubmitButton label={'Submit'} type={'submit'} disabled={!formMik.isValid}/>
                 </form>
             </Card>
-
         </div>
-
     )
 }
 export default AccountInformation
