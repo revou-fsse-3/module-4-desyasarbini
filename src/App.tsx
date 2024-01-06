@@ -3,8 +3,8 @@ import {
   LoginContainer, 
   ProfileContainer, 
   DaftarContainer,
-  ProtectContainer,
-  ProductContainer } from './containers'
+  ProductContainer, 
+  CategoryContainer} from './containers'
 import './App.css';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import PublicLayout from './layout/PublicLayout'
@@ -48,8 +48,8 @@ const App = () => {
       element: <ProtectLayout/>,
       children: [
         {
-          path: '/protect',
-          element: <ProtectContainer/>
+          path: '/protect-category',
+          element: <CategoryContainer/>
         }
       ]
     }

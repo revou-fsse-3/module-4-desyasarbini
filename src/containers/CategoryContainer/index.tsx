@@ -1,10 +1,10 @@
 import { useParams } from 'react-router-dom'
 
-const ProtectContainer = () => {
+const CategoryContainer = () => {
     return (
         <div>
             Halaman ini terproteksi
         </div>
     )
 }
-export default ProtectContainer
+export default CategoryContainer

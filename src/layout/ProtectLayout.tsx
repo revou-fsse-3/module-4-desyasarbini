@@ -10,7 +10,6 @@ const ProtectLayout = () => {
             <div>
                 <Navbar/>
                 <Outlet/>
-                <div>Footer</div>
             </div>
         )
     }
