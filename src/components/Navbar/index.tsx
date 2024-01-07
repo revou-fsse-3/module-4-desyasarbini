@@ -29,8 +29,7 @@ const Navbar = () => {
                             <button onClick={() => navigate('/')} className="bg-gray-900 text-white rounded-md px-3 py-2 text-sm font-medium" aria-current="page">Register</button>
                             <button onClick={() => navigate('/login')} className="bg-gray-900 text-white rounded-md px-3 py-2 text-sm font-medium" aria-current="page">Login</button>
                             <button onClick={() => navigate('/profile')} className="bg-gray-900 text-white rounded-md px-3 py-2 text-sm font-medium" aria-current="page">Profile</button>
-                            <button onClick={() => navigate('/protect-category')} className="bg-gray-900 text-white rounded-md px-3 py-2 text-sm font-medium" aria-current="page">Category</button>
-                            <button onClick={() => navigate('/product')} className="bg-gray-900 text-white rounded-md px-3 py-2 text-sm font-medium" aria-current="page">Product</button>
+                            <button onClick={() => navigate('/protect-list-category')} className="bg-gray-900 text-white rounded-md px-3 py-2 text-sm font-medium" aria-current="page">Category</button>
                             <button onClick={() => navigate('/daftar')} className="bg-gray-900 text-white rounded-md px-3 py-2 text-sm font-medium" aria-current="page">Tugas-1</button>
                         </div>
                         </div>

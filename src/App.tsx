@@ -3,13 +3,13 @@ import {
   LoginContainer, 
   ProfileContainer, 
   DaftarContainer,
-  ProductContainer, 
   CategoryContainer} from './containers'
 import './App.css';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import PublicLayout from './layout/PublicLayout'
 import ProtectLayout from './layout/ProtectLayout'
 import ContextProvider from './providers/ContextProvider';
+import { EditCategory, ListCategory } from './containers/CategoryContainer';
 
 
 const App = () => {
@@ -31,10 +31,6 @@ const App = () => {
           element: <ProfileContainer/>
         },
         {
-          path: '/product',
-          element: <ProductContainer/>
-        },
-        {
           path: '/daftar',
           element: <DaftarContainer/>
         },
@@ -48,8 +44,12 @@ const App = () => {
       element: <ProtectLayout/>,
       children: [
         {
-          path: '/protect-category',
-          element: <CategoryContainer/>
+          path: '/protect-list-category',
+          element: <ListCategory/>
+        },
+        {
+          path: '/protect-edit-category',
+          element: <EditCategory/>
         }
       ]
     }
