@@ -96,13 +96,14 @@ const ListCategory = () => {
 
     const updateCategory = async (data: Category) => {
         try {
-          const response = await fetch(`https://mock-api.arikmpt.com/api/category/update/${data.id}`, {
+          const response = await fetch('https://mock-api.arikmpt.com/api/category/update', {
             headers: {
               Authorization: `Bearer ${token}`,
               'Content-Type': 'application/json',
             },
             method: 'PUT',
             body: JSON.stringify({
+              id: data.id,
               name: data.name,
               is_active: data.is_active,
             }),
