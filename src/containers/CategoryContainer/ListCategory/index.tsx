@@ -39,7 +39,13 @@ const ListCategory = () => {
     useEffect(
         () => {
             fetchCategories()
-        }, []
+            if (editingCategory) {
+                formMik.setValues({
+                    name: editingCategory.name,
+                    is_active: editingCategory.is_active
+                })
+            }
+        }, [editingCategory]
     )
 
     const formMik = useFormik({
@@ -48,17 +54,18 @@ const ListCategory = () => {
             is_active: true
         },
         onSubmit: async (values, { resetForm }) => {
+            console.log('submitting form with values:', values)
             if (editingCategory) {
                 await updateCategory({ ...editingCategory, ...values });
             } else {
                 await createCategory(values);
             }
             resetForm();
-            setEditingCategory(null); // Reset editingCategory after submit
+            setEditingCategory(null);
         },
         validationSchema: yup.object({
             name: yup.string().required(),
-            is_active: yup.boolean().required()
+            is_active: yup.boolean().required(),
         })
     })
 
@@ -86,36 +93,32 @@ const ListCategory = () => {
 
     const updateCategory = async (data: Category) => {
         try {
-            const response = await fetch('https://mock-api.arikmpt.com/api/category/update', {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                    'Content-Type': 'application/json',
-                },
-                method: 'PUT',
-                body: JSON.stringify({
-                    id: data.id,
-                    name: data.name,
-                    is_active: data.is_active,
-                }),
-            });
-    
-            console.log('Update Response:', response);
-    
-            if (response.status === 204) {
-                // Successful update, but no content to parse
-                fetchCategories();
-                console.log('Category updated successfully');
-            } else if (response.ok) {
-                const updatedCategory = await response.json();
-                fetchCategories();
-                console.log(updatedCategory);
-            } 
-        } catch (error) {
-            console.error('Error updating category:', error);
-        }
-    };
+          const response = await fetch(`https://mock-api.arikmpt.com/api/category/update/${data.id}`, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+              'Content-Type': 'application/json',
+            },
+            method: 'PUT',
+            body: JSON.stringify({
+              name: data.name,
+              is_active: data.is_active,
+            }),
+          });
       
-    
+          console.log('Update Response:', response);
+      
+          if (!response.ok) {
+            const errorData = await response.json();
+            console.error('Update failed:', errorData);
+          } else {
+            const updatedCategory = await response.json();
+            console.log(updatedCategory);
+            fetchCategories();
+          }
+        } catch (error) {
+          console.error('Error updating category:', error);
+        }
+    }   
 
     const editCategory = async (id: string) => {
         try {
@@ -130,18 +133,17 @@ const ListCategory = () => {
             if (response.ok) {
                 const responseData = await response.json();
                 const getCategory = responseData.data; // Access the nested 'data' property
+                console.log('editing category:', getCategory)
                 if (getCategory && typeof getCategory.is_active === 'boolean') {
                     setEditingCategory(getCategory);
                 } else {
                     console.error('Invalid category data:', getCategory);
-                }
+                } 
             }
         } catch (error) {
             console.error('Error fetching category:', error);
         }
     };
-    
-        
 
     const deleteCategory = async (id: string) => {
         try {
@@ -162,7 +164,6 @@ const ListCategory = () => {
     const { name, is_active } = values;
     const token = localStorage.getItem("token")
 
-    
     return (
         <Card border>
             <Card border={false}>
@@ -196,44 +197,45 @@ const ListCategory = () => {
                     <div>
                         <Text>{'Category Name'}</Text>
                         <Input
-                            className="border-solid border-2 border-sky-500 rounded-md w-full" 
-                            name={'name'} 
+                            className="border-solid border-2 border-sky-500 rounded-md w-full"
+                            name={'name'}
                             type="text"
                             value={editingCategory ? editingCategory.name : formMik.values.name}
                             onChange={(e) => {
                                 if (editingCategory) {
-                                    // Update the editingCategory directly
-                                    setEditingCategory({
-                                        ...editingCategory,
-                                        name: e.target.value,
-                                    });
+                                // Update the editingCategory directly
+                                setEditingCategory({
+                                    ...editingCategory,
+                                    name: e.target.value,
+                                });
                                 } else {
-                                    // Update formMik.values
-                                    formMik.handleChange('name')(e);
+                                // Update formMik.values
+                                formMik.handleChange('name')(e);
                                 }
                             }}
-                        />
-                        {formMik.errors.name && (
-                            <Text>{formMik.errors.name}</Text>
-                        )}
+                        /> {formMik.errors.name && <Text>{formMik.errors.name}</Text>}
                     </div>
                     <div>
                         <Text>{'Status'}</Text>
                         <label>
-                            <select 
+                            <select
                                 className="border-solid border-2 border-sky-500 rounded-md w-full"
-                                name="is_active" 
-                                value={editingCategory ? editingCategory.is_active.toString() : formMik.values.is_active.toString()}
+                                name="is_active"
+                                value={
+                                    editingCategory
+                                    ? editingCategory.is_active.toString()
+                                    : formMik.values.is_active.toString()
+                                }
                                 onChange={(e) => {
                                     if (editingCategory) {
-                                        // Update the editingCategory directly
-                                        setEditingCategory({
-                                            ...editingCategory,
-                                            is_active: e.target.value === 'true',
-                                        });
+                                    // Update the editingCategory directly
+                                    setEditingCategory({
+                                        ...editingCategory,
+                                        is_active: e.target.value === 'true',
+                                    });
                                     } else {
-                                        // Update formMik.values
-                                        formMik.handleChange('is_active')(e);
+                                    // Update formMik.values
+                                    formMik.handleChange('is_active')(e);
                                     }
                                 }}
                             >
@@ -243,8 +245,7 @@ const ListCategory = () => {
                             </select>
                         </label>
                     </div>
-                    <Tombol label={'Add Category'} type={"submit"}/>
-                    <Tombol label={'Update'} type={"submit"}/>
+                    <Tombol label={'Save'} type={"submit"} />
                 </form>
             </Card>
         </Card>
