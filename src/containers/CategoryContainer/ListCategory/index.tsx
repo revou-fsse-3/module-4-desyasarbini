@@ -45,9 +45,6 @@ const ListCategory = () => {
                     is_active: editingCategory.is_active
                 })
             }
-            else {
-                formMik.resetForm();
-            }
         }, [editingCategory]
     )
 
@@ -96,40 +93,32 @@ const ListCategory = () => {
 
     const updateCategory = async (data: Category) => {
         try {
-          const response = await fetch('https://mock-api.arikmpt.com/api/category/update', {
-            headers: {
-              Authorization: `Bearer ${token}`,
-              'Content-Type': 'application/json',
-            },
-            method: 'PUT',
-            body: JSON.stringify({
-              id: data.id,
-              name: data.name,
-              is_active: data.is_active,
-            }),
-          });
-      
-          console.log('Update Response:', response);
-      
-          if (!response.ok) {
-            const errorData = await response.json();
-            console.error('Update failed:', errorData);
-          } else {
-            const updatedCategory = await response.json();
-            console.log('Updated Category:', updatedCategory);
-      
-            // Update the state with the edited category directly
-            setCategory((prevCategories) => {
-              const updatedCategories = prevCategories.map((category) =>
-                category.id === updatedCategory.id ? updatedCategory : category
-              );
-              return updatedCategories;
+            const response = await fetch('https://mock-api.arikmpt.com/api/category/update', {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    'Content-Type': 'application/json',
+                },
+                method: 'PUT',
+                body: JSON.stringify({
+                    id: data.id,
+                    name: data.name,
+                    is_active: data.is_active
+                })
             });
-          }
+    
+            if (response.status !== 204) {
+                const updatedCategory = await response.json()
+                console.log('Category updated successfully with data:', updatedCategory)
+            } else {
+                console.log('Category updated successfully')
+            }
+    
+            fetchCategories()
         } catch (error) {
-          console.error('Error updating category:', error);
+            console.error('Error updating category:', error)
         }
-    } 
+    }
+       
 
     const editCategory = async (id: string) => {
         try {
