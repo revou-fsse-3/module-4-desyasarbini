@@ -45,6 +45,9 @@ const ListCategory = () => {
                     is_active: editingCategory.is_active
                 })
             }
+            else {
+                formMik.resetForm();
+            }
         }, [editingCategory]
     )
 
@@ -112,13 +115,20 @@ const ListCategory = () => {
             console.error('Update failed:', errorData);
           } else {
             const updatedCategory = await response.json();
-            console.log(updatedCategory);
-            fetchCategories();
+            console.log('Updated Category:', updatedCategory);
+      
+            // Update the state with the edited category directly
+            setCategory((prevCategories) => {
+              const updatedCategories = prevCategories.map((category) =>
+                category.id === updatedCategory.id ? updatedCategory : category
+              );
+              return updatedCategories;
+            });
           }
         } catch (error) {
           console.error('Error updating category:', error);
         }
-    }   
+    } 
 
     const editCategory = async (id: string) => {
         try {

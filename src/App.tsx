@@ -1,9 +1,8 @@
 import { 
   RegisterContainer, 
-  LoginContainer, 
-  ProfileContainer, 
+  LoginContainer,  
   DaftarContainer,
-  CategoryContainer} from './containers'
+} from './containers'
 import './App.css';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import PublicLayout from './layout/PublicLayout'
@@ -27,10 +26,6 @@ const App = () => {
           element: <LoginContainer/>
         },
         {
-          path: '/profile',
-          element: <ProfileContainer/>
-        },
-        {
           path: '/daftar',
           element: <DaftarContainer/>
         },
@@ -48,7 +43,7 @@ const App = () => {
           element: <ListCategory/>
         },
         {
-          path: '/protect-edit-category',
+          path: '/protect-edit-category/:id',
           element: <EditCategory/>
         }
       ]
